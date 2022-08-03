@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import React, { Component } from 'react'
+import Footer from './components/Footer'
+import Navbar from './components/Navbar'
+// import News from './components/News'
+import NewsList from './components/NewsList'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import NewsTwo from './components2/NewsTwo'
+import NewsProvider from './context/NewsProvider';
+
+export default class App extends Component {
+
+  apiKey = process.env.REACT_APP_NEWS_API
+
+
+  render() {
+    return (
+      <>
+        <NewsProvider>
+          <BrowserRouter>
+            <Navbar />
+            <NewsList />
+            <Routes>
+              <Route exact path='/' element={<NewsTwo key="general" category="general" apiKey ={this.apiKey}/>} />
+             
+              <Route exact path='/business' element={<NewsTwo key="business" category="business" apiKey ={this.apiKey}/>} />
+              <Route exact path='/science' element={<NewsTwo key="science" category="science" apiKey ={this.apiKey}/>} />
+              <Route exact path='/health' element={<NewsTwo key="health" category="health" apiKey ={this.apiKey}/>} />
+              <Route exact path='/sports' element={<NewsTwo key="sports" category="sports" apiKey ={this.apiKey}/>} />
+              <Route exact path='/technology' element={<NewsTwo key="technology" category="technology" apiKey ={this.apiKey}/>} />
+              <Route exact path='/entertainment' element={<NewsTwo key="entertainment" category="entertainment" apiKey ={this.apiKey}/>} />
+
+            </Routes>
+            <Footer />
+          </BrowserRouter>
+        </NewsProvider>
+      </>
+    )
+  }
 }
 
-export default App;
+
+
